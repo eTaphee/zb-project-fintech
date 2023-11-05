@@ -1,5 +1,7 @@
 package com.zerobase.api.loan.review
 
+import com.zerobase.domain.domain.LoanReview
+
 class LoanReviewDto {
     data class LoanReviewResponseDto(
         val userKey: String,
@@ -9,11 +11,13 @@ class LoanReviewDto {
     data class LoanResult(
         val userLimitAmount: Long,
         val userLoanInterest: Double
-    )
-
-    data class LoanReview(
-        val userKey: String,
-        val userLimitAmount: Long,
-        val userLoanInterest: Double
-    )
+    ) {
+        companion object {
+            fun fromEntity(loanReview: LoanReview): LoanResult =
+                LoanResult(
+                    loanReview.loanLimitedAmount,
+                    loanReview.loanInterest
+                )
+        }
+    }
 }
