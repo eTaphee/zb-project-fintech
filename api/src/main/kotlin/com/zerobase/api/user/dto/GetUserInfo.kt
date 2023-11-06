@@ -2,7 +2,7 @@ package com.zerobase.api.user.dto
 
 import com.zerobase.api.type.ResponseCode
 
-class UserInfo {
+class GetUserInfo {
     data class ResponseDto(
         val data: UserInfoDto?,
         val responseCode: String,
