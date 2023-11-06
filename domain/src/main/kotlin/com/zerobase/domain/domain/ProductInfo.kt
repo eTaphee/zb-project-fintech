@@ -19,13 +19,13 @@ class ProductInfo(
     val productCode: ProductCode,
 
     @Column(name = "prod_nm")
-    val productName: String,
+    var productName: String,
 
     @Column(name = "prod_max_intr")
-    val productMaximumInterest: Double,
+    var productMaximumInterest: Double,
 
     @Column(name = "prod_min_intr")
-    val productMinimumInterest: Double
+    var productMinimumInterest: Double
 ) {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
