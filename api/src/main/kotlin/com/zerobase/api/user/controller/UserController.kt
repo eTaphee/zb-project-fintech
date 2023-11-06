@@ -1,7 +1,8 @@
 package com.zerobase.api.user.controller
 
-import com.zerobase.api.user.dto.GetUserInfo
-import com.zerobase.api.user.dto.ReceiveUser
+import com.zerobase.api.user.dto.GetUserInfoResponseDto
+import com.zerobase.api.user.dto.ReceiveUserRequestDto
+import com.zerobase.api.user.dto.ReceiveUserResponseDto
 import com.zerobase.api.user.service.UserService
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
@@ -20,9 +21,9 @@ class UserController(
     )
     @PostMapping("information")
     fun receiveUserInfo(
-        @RequestBody userInfoRequestDto: ReceiveUser.RequestDto
-    ): ResponseEntity<ReceiveUser.ResponseDto> =
-        ResponseEntity.ok(userService.receiveUserInfo(userInfoRequestDto))
+        @RequestBody userInfoReceiveUserRequestDto: ReceiveUserRequestDto
+    ): ResponseEntity<ReceiveUserResponseDto> =
+        ResponseEntity.ok(userService.receiveUserInfo(userInfoReceiveUserRequestDto))
 
     @ApiOperation(
         value = "유저 정보 조회 API",
@@ -31,6 +32,6 @@ class UserController(
     @GetMapping("private-info/{userKey}")
     fun getUserInfo(
         @PathVariable userKey: String
-    ): ResponseEntity<GetUserInfo.ResponseDto> =
+    ): ResponseEntity<GetUserInfoResponseDto> =
         ResponseEntity.ok(userService.getUserInfo(userKey))
 }

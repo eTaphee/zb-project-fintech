@@ -1,7 +1,8 @@
 package com.zerobase.api.product.controller
 
-import com.zerobase.api.product.dto.GetProducts
-import com.zerobase.api.product.dto.ReceiveProductInfo
+import com.zerobase.api.product.dto.GetProductsResponseDto
+import com.zerobase.api.product.dto.ReceiveProductInfoRequestDto
+import com.zerobase.api.product.dto.ReceiveProductInfoResponseDto
 import com.zerobase.api.product.service.ProductService
 import com.zerobase.domain.type.OrganizationCode
 import io.swagger.annotations.Api
@@ -23,7 +24,7 @@ class ProductController(
     @GetMapping("{organizationCode}")
     fun getProductInfos(
         @PathVariable organizationCode: OrganizationCode
-    ): ResponseEntity<GetProducts.ResponseDto> =
+    ): ResponseEntity<GetProductsResponseDto> =
         ResponseEntity.ok(productService.getProductInfosByOrganizationCode(organizationCode))
 
     @ApiOperation(
@@ -32,7 +33,7 @@ class ProductController(
     )
     @PostMapping("information")
     fun receiveProductInfo(
-        @RequestBody productInfoRequestDto: ReceiveProductInfo.RequestDto
-    ): ResponseEntity<ReceiveProductInfo.ResponseDto> =
-        ResponseEntity.ok(productService.receiveProductInfo(productInfoRequestDto))
+        @RequestBody productInfoReceiveProductInfoRequestDto: ReceiveProductInfoRequestDto
+    ): ResponseEntity<ReceiveProductInfoResponseDto> =
+        ResponseEntity.ok(productService.receiveProductInfo(productInfoReceiveProductInfoRequestDto))
 }

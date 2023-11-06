@@ -1,8 +1,9 @@
 package com.zerobase.api.product.service
 
-import com.zerobase.api.product.dto.GetProducts
+import com.zerobase.api.product.dto.GetProductsResponseDto
 import com.zerobase.api.product.dto.ProductInfoDto
-import com.zerobase.api.product.dto.ReceiveProductInfo
+import com.zerobase.api.product.dto.ReceiveProductInfoRequestDto
+import com.zerobase.api.product.dto.ReceiveProductInfoResponseDto
 import com.zerobase.api.type.ResponseCode.SUCCESS
 import com.zerobase.domain.repository.ProductInfoRepository
 import com.zerobase.domain.type.OrganizationCode
@@ -18,11 +19,15 @@ class ProductServiceImpl(
     private val productInfoRepository: ProductInfoRepository
 ) : ProductService {
     @Transactional(readOnly = true)
-    @Cacheable(value = ["PRODUCT"], key = "#organizationCode.code", cacheManager = "redisCacheManager")
+    @Cacheable(
+        value = ["PRODUCT"],
+        key = "#organizationCode.code",
+        cacheManager = "redisCacheManager"
+    )
     override fun getProductInfosByOrganizationCode(
         organizationCode: OrganizationCode
-    ): GetProducts.ResponseDto {
-        return GetProducts.ResponseDto.of(
+    ): GetProductsResponseDto {
+        return GetProductsResponseDto.of(
             SUCCESS,
             productInfoRepository
                 .findAllByOrganizationCode(organizationCode)
@@ -33,25 +38,25 @@ class ProductServiceImpl(
     }
 
     @Transactional
-    @CacheEvict(value = ["PRODUCT"], key = "#requestDto.organizationCode")
+    @CacheEvict(value = ["PRODUCT"], key = "#receiveProductInfoRequestDto.organizationCode")
     override fun receiveProductInfo(
-        requestDto: ReceiveProductInfo.RequestDto
-    ): ReceiveProductInfo.ResponseDto {
+        receiveProductInfoRequestDto: ReceiveProductInfoRequestDto
+    ): ReceiveProductInfoResponseDto {
         val productInfo =
             productInfoRepository.findByOrganizationCodeAndProductCode(
-                OrganizationCode.ofCode(requestDto.organizationCode),
-                ProductCode.ofCode(requestDto.productCode)
+                OrganizationCode.ofCode(receiveProductInfoRequestDto.organizationCode),
+                ProductCode.ofCode(receiveProductInfoRequestDto.productCode)
             )
 
         if (productInfo == null) {
-            productInfoRepository.save(requestDto.toEntity())
+            productInfoRepository.save(receiveProductInfoRequestDto.toEntity())
         } else {
-            productInfo.productName = requestDto.productName
-            productInfo.productMaximumInterest = requestDto.productMaximumInterest
-            productInfo.productMinimumInterest = requestDto.productMinimumInterest
+            productInfo.productName = receiveProductInfoRequestDto.productName
+            productInfo.productMaximumInterest = receiveProductInfoRequestDto.productMaximumInterest
+            productInfo.productMinimumInterest = receiveProductInfoRequestDto.productMinimumInterest
             productInfoRepository.save(productInfo)
         }
 
-        return ReceiveProductInfo.ResponseDto.from(SUCCESS)
+        return ReceiveProductInfoResponseDto.from(SUCCESS)
     }
 }
