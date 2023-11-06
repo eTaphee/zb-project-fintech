@@ -1,9 +1,7 @@
 package com.zerobase.api.loan.request
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.module.kotlin.KotlinModule
 import com.zerobase.api.loan.GenerateKey
-import com.zerobase.api.loan.encrypt.EncryptComponent
 import com.zerobase.domain.domain.UserInfo
 import com.zerobase.domain.repository.UserInfoRepository
 import io.mockk.every
@@ -16,7 +14,6 @@ import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.post
-import org.springframework.test.web.servlet.setup.MockMvcBuilders
 
 @WebMvcTest(LoanRequestController::class)
 internal class LoanRequestControllerTest {
@@ -29,8 +26,6 @@ internal class LoanRequestControllerTest {
 
     private val userInfoRepository: UserInfoRepository = mockk()
 
-    private lateinit var encryptComponent: EncryptComponent
-
     private lateinit var mapper: ObjectMapper
 
     @MockBean
@@ -42,19 +37,17 @@ internal class LoanRequestControllerTest {
 
     @BeforeEach
     fun init() {
-        generateKey = GenerateKey()
-
-        encryptComponent = EncryptComponent()
-
-        loanRequestServiceImpl = LoanRequestServiceImpl(
-            generateKey, userInfoRepository, encryptComponent
-        )
-
-        loanRequestController = LoanRequestController(loanRequestServiceImpl)
-
-        mockMvc = MockMvcBuilders.standaloneSetup(loanRequestController).build()
-
-        mapper = ObjectMapper().registerModule(KotlinModule.Builder().build())
+//        generateKey = GenerateKey()
+//
+//        loanRequestServiceImpl = LoanRequestServiceImpl(
+//            generateKey, userInfoRepository, encryptComponent
+//        )
+//
+//        loanRequestController = LoanRequestController(loanRequestServiceImpl)
+//
+//        mockMvc = MockMvcBuilders.standaloneSetup(loanRequestController).build()
+//
+//        mapper = ObjectMapper().registerModule(KotlinModule.Builder().build())
     }
 
     @Test

@@ -21,8 +21,10 @@ class KafkaConfiguration {
     fun producerFactory(): ProducerFactory<String, String> {
         val configurationProperties = HashMap<String, Any>()
         configurationProperties[ProducerConfig.BOOTSTRAP_SERVERS_CONFIG] = bootstrapServer
-        configurationProperties[ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG] = StringSerializer::class.java
-        configurationProperties[ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG] = StringSerializer::class.java
+        configurationProperties[ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG] =
+            StringSerializer::class.java
+        configurationProperties[ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG] =
+            StringSerializer::class.java
 
         return DefaultKafkaProducerFactory(configurationProperties)
     }
@@ -33,8 +35,10 @@ class KafkaConfiguration {
         configurationProperties[ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG] = bootstrapServer
         configurationProperties[ConsumerConfig.GROUP_ID_CONFIG] = "fintech"
         configurationProperties[ConsumerConfig.AUTO_OFFSET_RESET_CONFIG] = "earliest"
-        configurationProperties[ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG] = StringDeserializer::class.java
-        configurationProperties[ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG] = StringDeserializer::class.java
+        configurationProperties[ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG] =
+            StringDeserializer::class.java
+        configurationProperties[ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG] =
+            StringDeserializer::class.java
 
         return DefaultKafkaConsumerFactory(configurationProperties)
     }

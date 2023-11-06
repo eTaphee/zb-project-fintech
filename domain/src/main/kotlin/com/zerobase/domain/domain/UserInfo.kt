@@ -1,11 +1,7 @@
 package com.zerobase.domain.domain
 
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
-import javax.persistence.Id
-import javax.persistence.Table
+import com.zerobase.domain.aop.Encrypt
+import javax.persistence.*
 
 @Entity
 @Table(name = "USR_INFO")
@@ -17,7 +13,8 @@ class UserInfo(
     val userName: String,
 
     @Column(name = "usr_reg_num")
-    val userRegistrationNumber: String,
+    @Encrypt
+    var userRegistrationNumber: String,
 
     @Column(name = "usr_icm_amt")
     val userIncomeAmount: Long

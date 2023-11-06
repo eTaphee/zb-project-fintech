@@ -34,7 +34,11 @@ class LoanRequestService(
             .setReadTimeout(Duration.ofMillis(1000))
             .build()
 
-        return restTemplate.postForEntity(requestUrl, loanRequestDto, ReviewResponseDto::class.java).body!!
+        return restTemplate.postForEntity(
+            requestUrl,
+            loanRequestDto,
+            ReviewResponseDto::class.java
+        ).body!!
     }
 
     fun saveLoanReviewData(loanReview: LoanReview) = loanReviewRepository.save(loanReview)
