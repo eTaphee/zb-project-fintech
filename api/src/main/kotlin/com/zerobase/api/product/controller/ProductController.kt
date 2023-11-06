@@ -1,6 +1,6 @@
 package com.zerobase.api.product.controller
 
-import com.zerobase.api.product.dto.GetProductsResponseDto
+import com.zerobase.api.product.dto.GetProducts
 import com.zerobase.api.product.dto.ReceiveProductInfo
 import com.zerobase.api.product.service.ProductService
 import com.zerobase.domain.type.OrganizationCode
@@ -16,7 +16,7 @@ class ProductController(
     @GetMapping("{organizationCode}")
     fun getProductInfos(
         @PathVariable organizationCode: OrganizationCode
-    ): ResponseEntity<GetProductsResponseDto> =
+    ): ResponseEntity<GetProducts.ResponseDto> =
         ResponseEntity.ok(productService.getProductInfosByOrganizationCode(organizationCode))
 
     @PostMapping("information")

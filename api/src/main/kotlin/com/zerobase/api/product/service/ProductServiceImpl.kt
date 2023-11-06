@@ -1,6 +1,6 @@
 package com.zerobase.api.product.service
 
-import com.zerobase.api.product.dto.GetProductsResponseDto
+import com.zerobase.api.product.dto.GetProducts
 import com.zerobase.api.product.dto.ProductInfoDto
 import com.zerobase.api.product.dto.ReceiveProductInfo
 import com.zerobase.api.type.ResponseCode.SUCCESS
@@ -16,8 +16,8 @@ class ProductServiceImpl(
 ) : ProductService {
     override fun getProductInfosByOrganizationCode(
         organizationCode: OrganizationCode
-    ): GetProductsResponseDto {
-        return GetProductsResponseDto.of(
+    ): GetProducts.ResponseDto {
+        return GetProducts.ResponseDto.of(
             SUCCESS,
             productInfoRepository
                 .findAllByOrganizationCode(organizationCode)

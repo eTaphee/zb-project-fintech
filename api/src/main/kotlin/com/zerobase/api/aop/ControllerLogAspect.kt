@@ -46,10 +46,11 @@ class ControllerLogAspect {
         joinPoint: ProceedingJoinPoint
     ): ResponseEntity<*> {
         stopWatch.start()
-        val response = joinPoint.proceed() as ResponseEntity<*>
-        stopWatch.stop()
-
-        return response
+        try {
+            return joinPoint.proceed() as ResponseEntity<*>
+        } finally {
+            stopWatch.stop()
+        }
     }
 
     private fun getRequest(): HttpServletRequest {
