@@ -7,11 +7,13 @@ import com.zerobase.api.user.dto.UserInfo
 import com.zerobase.api.user.dto.UserInfoDto
 import com.zerobase.domain.repository.UserInfoRepository
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 class UserServiceImpl(
     private val userInfoRepository: UserInfoRepository
 ) : UserService {
+    @Transactional(readOnly = true)
     override fun getUserInfo(userKey: String): UserInfo.ResponseDto {
         val userInfo = userInfoRepository.findByUserKey(userKey)
             ?: throw CustomException(USER_NOT_FOUND)

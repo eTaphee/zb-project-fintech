@@ -7,13 +7,18 @@ import com.zerobase.api.type.ResponseCode.SUCCESS
 import com.zerobase.domain.repository.ProductInfoRepository
 import com.zerobase.domain.type.OrganizationCode
 import com.zerobase.domain.type.ProductCode
+import org.springframework.cache.annotation.CacheEvict
+import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import kotlin.streams.toList
 
 @Service
 class ProductServiceImpl(
     private val productInfoRepository: ProductInfoRepository
 ) : ProductService {
+    @Transactional(readOnly = true)
+    @Cacheable(value = ["PRODUCT"], key = "#organizationCode.code", cacheManager = "redisCacheManager")
     override fun getProductInfosByOrganizationCode(
         organizationCode: OrganizationCode
     ): GetProducts.ResponseDto {
@@ -27,6 +32,8 @@ class ProductServiceImpl(
         )
     }
 
+    @Transactional
+    @CacheEvict(value = ["PRODUCT"], key = "#requestDto.organizationCode")
     override fun receiveProductInfo(
         requestDto: ReceiveProductInfo.RequestDto
     ): ReceiveProductInfo.ResponseDto {
