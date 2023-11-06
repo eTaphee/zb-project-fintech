@@ -20,4 +20,4 @@ spring:
 kafka:
   bootstrap-server: kafka:9092
 css:
-  url: http://css:8081
+  url: http://nginx:8085
