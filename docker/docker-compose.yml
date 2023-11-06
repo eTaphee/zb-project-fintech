@@ -1,5 +1,26 @@
 version: '2'
 services:
+  mysql:
+    image: mysql:latest
+    container_name: mysql
+    ports:
+      - "3306:3306"
+    volumes:
+      - "mysql_data:/var/lib/mysql"
+    networks:
+      - fintech
+    environment:
+      - MYSQL_ROOT_PASSWORD=fintech
+      - MYSQL_USER=fintech
+      - MYSQL_PASSWORD=fintech
+      - MYSQL_DATABASE=fintech
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - fintech
   zookeeper:
     image: docker.io/bitnami/zookeeper:3.9
     container_name: zookeeper
@@ -20,9 +41,44 @@ services:
       - "kafka_data:/bitnami"
     environment:
       - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
-      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://localhost:9092
+      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092
     depends_on:
       - zookeeper
+    networks:
+      - fintech
+  api:
+    image: api:${VERSION}
+    container_name: api
+    ports:
+      - "80:80"
+    depends_on:
+      - kafka
+      - mysql
+      - redis
+    networks:
+      - fintech
+  consumer:
+    image: consumer:${VERSION}
+    container_name: consumer
+    ports:
+      - "8080:8080"
+    depends_on:
+      - kafka
+      - mysql
+    networks:
+      - fintech
+  css:
+    image: css:${VERSION}
+    container_name: css
+    ports:
+      - "8081:8081"
+    networks:
+      - fintech
+  nginx:
+    image: nginx:${VERSION}
+    container_name: nginx
+    ports:
+      - "8085:8085"
     networks:
       - fintech
 
@@ -34,4 +90,6 @@ volumes:
   zookeeper_data:
     driver: local
   kafka_data:
+    driver: local
+  mysql_data:
     driver: local

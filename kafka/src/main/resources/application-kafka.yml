@@ -1,0 +1,23 @@
+spring:
+  profiles:
+    group:
+      local: local
+      dev: dev
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+kafka:
+  bootstrap-server: localhost:9092
+css:
+  url: http://localhost:8081
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+kafka:
+  bootstrap-server: kafka:9092
+css:
+  url: http://css:8081

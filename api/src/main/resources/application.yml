@@ -2,6 +2,7 @@ spring:
   profiles:
     include:
       - domain
+      - kafka
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher

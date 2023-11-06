@@ -4,16 +4,23 @@ import com.zerobase.consumer.dto.ReviewResponseDto
 import com.zerobase.domain.domain.LoanReview
 import com.zerobase.domain.repository.LoanReviewRepository
 import com.zerobase.kafka.dto.LoanRequestDto
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.web.client.RestTemplateBuilder
 import org.springframework.stereotype.Service
 import java.time.Duration
+import javax.annotation.PostConstruct
 
 @Service
 class LoanRequestService(
     private val loanReviewRepository: LoanReviewRepository
 ) {
-    companion object {
-        const val cssUrl = "http://localhost:8081/css/api/v1/request"
+    @Value("\${css.url}")
+    private lateinit var cssUrl: String
+    private lateinit var requestUrl: String
+
+    @PostConstruct
+    private fun initialize() {
+        requestUrl = "${cssUrl}/css/api/v1/request"
     }
 
     fun loanRequest(loanRequestDto: LoanRequestDto) {
@@ -27,7 +34,7 @@ class LoanRequestService(
             .setReadTimeout(Duration.ofMillis(1000))
             .build()
 
-        return restTemplate.postForEntity(cssUrl, loanRequestDto, ReviewResponseDto::class.java).body!!
+        return restTemplate.postForEntity(requestUrl, loanRequestDto, ReviewResponseDto::class.java).body!!
     }
 
     fun saveLoanReviewData(loanReview: LoanReview) = loanReviewRepository.save(loanReview)

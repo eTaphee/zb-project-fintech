@@ -29,6 +29,6 @@ class LogAspect {
 
         logger.info { "${joinPoint.signature.name} ${joinPoint.args[0]} ${stopWatch.lastTaskTimeMillis}" }
 
-        return result;
+        return result
     }
 }

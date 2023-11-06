@@ -1,4 +1,10 @@
 spring:
+  profiles:
+    group:
+      local: local
+      dev: dev
+---
+spring:
   jpa:
     generate-ddl: false
     show-sql: true
@@ -6,6 +12,11 @@ spring:
       ddl-auto: validate
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+---
+spring:
+  config:
+    activate:
+      on-profile: local
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/fintech?characterEncoding=UTF-8&serverTimezone=Asia/Seoul
@@ -13,4 +24,17 @@ spring:
     password: fintech
   redis:
     host: localhost
+    port: 6379
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://mysql:3306/fintech?characterEncoding=UTF-8&serverTimezone=Asia/Seoul
+    username: fintech
+    password: fintech
+  redis:
+    host: redis
     port: 6379
