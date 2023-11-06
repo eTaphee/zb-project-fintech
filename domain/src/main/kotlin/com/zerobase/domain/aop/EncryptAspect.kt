@@ -24,22 +24,21 @@ class EncryptAspect(
 
     @Before("savePointcut(entity)", argNames = "entity")
     fun beforeSave(entity: Any?) {
-        encryptFields(entity, getEncryptFields(entity!!::class));
+        encryptFields(entity, getEncryptFields(entity!!::class))
     }
 
     @Pointcut("execution(* org.springframework.data.jpa.repository.JpaRepository+.find*(..))")
     fun findPointcut() {
-
     }
 
     @AfterReturning("findPointcut()", returning = "result")
     fun afterFind(result: Any?) {
         if (result is List<*>) {
             for (entity in result) {
-                decryptFields(entity, getEncryptFields(entity!!::class));
+                decryptFields(entity, getEncryptFields(entity!!::class))
             }
         } else {
-            decryptFields(result, getEncryptFields(result!!::class));
+            decryptFields(result, getEncryptFields(result!!::class))
         }
     }
 

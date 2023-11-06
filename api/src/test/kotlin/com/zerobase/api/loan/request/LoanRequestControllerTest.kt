@@ -6,7 +6,6 @@ import com.zerobase.domain.domain.UserInfo
 import com.zerobase.domain.repository.UserInfoRepository
 import io.mockk.every
 import io.mockk.mockk
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
@@ -33,21 +32,6 @@ internal class LoanRequestControllerTest {
 
     companion object {
         private const val baseUrl = "/fintech/api/v1"
-    }
-
-    @BeforeEach
-    fun init() {
-//        generateKey = GenerateKey()
-//
-//        loanRequestServiceImpl = LoanRequestServiceImpl(
-//            generateKey, userInfoRepository, encryptComponent
-//        )
-//
-//        loanRequestController = LoanRequestController(loanRequestServiceImpl)
-//
-//        mockMvc = MockMvcBuilders.standaloneSetup(loanRequestController).build()
-//
-//        mapper = ObjectMapper().registerModule(KotlinModule.Builder().build())
     }
 
     @Test

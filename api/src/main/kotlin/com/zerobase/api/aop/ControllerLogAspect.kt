@@ -37,7 +37,7 @@ class ControllerLogAspect {
 
         val response = proceedJoinPointWithStopWatch(joinPoint)
 
-        logger.info { "[${stopWatch.lastTaskTimeMillis} ms] ${response.statusCode} ${request.method} ${request.requestURL} ${response.body}" }
+        logger.info { "[${stopWatch.lastTaskTimeMillis} ms] ${response.statusCode} ${request.method} ${request.requestURI} ${response.body}" }
 
         return response
     }
